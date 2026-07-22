@@ -1,0 +1,285 @@
+Starter Code
+
+═══════════════════════════════════════════════════════════════════════════
+
+#!/bin/bash
+# GitFlow Branching Strategy Implementation Lab - STARTER CODE
+# Course: Create Branching Strategies for Parallel Development
+# Module 1: GitFlow Implementation & GitHub Protection with Rulesets
+# UPDATED FOR GITHUB 2026 - Uses modern Rulesets, PAT authentication
+# PROVIDED CODE - DO NOT MODIFY
+
+echo "=== GitFlow Branching Strategy Lab Setup ==="
+echo "Repository: User Management Application"
+echo "Objective: Implement enterprise GitFlow workflow with GitHub Rulesets"
+echo "GitHub Standard: Modern Rulesets (February 2026)"
+echo ""
+
+# Verify we're in a Git repository
+if [ ! -d ".git" ]; then
+ echo "ERROR: Not in a Git repository."
+ echo "Please ensure you've cloned your GitHub repository and are in the correct directory."
+ echo "Expected repository: gitflow-branching-lab"
+ exit 1
+fi
+
+# Check that initial project structure exists
+echo "Verifying project structure..."
+if [ ! -f "src/main.py" ]; then
+ echo "WARNING: Project files not found. Please ensure you've completed the setup steps."
+ echo "Required files: src/main.py, tests/test_main.py"
+ exit 1
+fi
+
+echo "✅ Repository verification complete"
+echo ""
+
+# PROVIDED CODE - DO NOT MODIFY
+# Display current repository status
+
+echo "=== CURRENT REPOSITORY STATUS ==="
+echo "Current branch:"
+git branch --show-current
+echo ""
+echo "All branches:"
+git branch -a
+echo ""
+echo "Recent commits:"
+git log --oneline -3
+
+echo ""
+
+# PROVIDED CODE - DO NOT MODIFY
+# Helper function for branch creation
+
+create_branch() {
+ local branch_name=$1
+ local source_branch=$2
+ 
+ if [ -z "$source_branch" ]; then
+ source_branch="main"
+ fi
+ 
+ echo "Creating branch: $branch_name from $source_branch"
+ git checkout $source_branch
+ git pull origin $source_branch 2>/dev/null || echo "No remote tracking for $source_branch"
+ git checkout -b $branch_name
+ echo "Successfully created and switched to: $branch_name"
+}
+
+# PROVIDED CODE - DO NOT MODIFY
+# GitHub Rulesets setup guidance (UPDATED FOR 2026)
+
+echo "=== GITHUB RULESETS SETUP GUIDE (MODERN STANDARD) ==="
+echo "📍 Navigate to: Repository → Rules (left sidebar)"
+echo ""
+echo "If you don't see 'Rules':"
+echo "  Settings → Code and automation → Rules"
+echo ""
+echo "🛡 DEVELOP BRANCH RULESET (Apply to: develop):"
+echo " 1. Click 'New branch ruleset'"
+echo " 2. Ruleset name: protect-develop"
+echo " 3. Branch pattern: develop"
+echo " 4. Enable ruleset toggle (ON)"
+echo " 5. Rules to require:"
+echo "    ✓ Require a pull request before merging (1 approval)"
+echo "    ✓ Dismiss stale PR approvals when new commits are pushed"
+echo "    ✓ Require conversation resolution before merging"
+echo "    ✓ Require status checks to pass before merging"
+echo "    ✓ Require branches to be up to date before merging"
+echo " 6. Click 'Create'"
+echo ""
+echo "🔒 MAIN BRANCH RULESET (Apply to: main):"
+echo " 1. Click 'New branch ruleset'"
+echo " 2. Ruleset name: protect-main"
+echo " 3. Branch pattern: main"
+echo " 4. Enable ruleset toggle (ON)"
+echo " 5. Rules to require:"
+echo "    ✓ Require a pull request before merging (2 approvals)"
+echo "    ✓ Dismiss stale PR approvals when new commits are pushed"
+echo "    ✓ Require conversation resolution before merging"
+echo "    ✓ Require status checks to pass before merging"
+echo "    ✓ Require branches to be up to date before merging"
+echo "    ✓ Block force pushes"
+echo "    ✓ Block deletions"
+echo " 6. Click 'Create'"
+echo ""
+echo "NOTE: Modern Rulesets are GitHub 2026 standard. Do NOT use legacy"
+echo "Settings → Branches interface - that is deprecated."
+echo ""
+
+### PRACTICE CHALLENGE 1 ###
+# TASK: Create GitFlow branch structure
+# 1. Create a 'develop' branch from main
+# 2. Create a feature branch named 'feature/user-authentication' from develop 
+# 3. Add authentication functionality to your feature branch
+# 4. Make at least one meaningful commit to the feature branch
+
+echo "🎯 PRACTICE CHALLENGE 1: GitFlow Branch Structure"
+echo "Complete the following tasks:"
+echo "1. Create 'develop' branch from main"
+echo "2. Create 'feature/user-authentication' branch from develop"
+echo "3. Add authentication functionality"
+echo "4. Make meaningful commit to feature branch"
+echo ""
+echo "Enter your Git commands below this line:"
+echo "# YOUR COMMANDS START HERE"
+
+# Placeholder for student work - remove these comments and add actual commands
+# Example structure (students will replace with actual commands):
+# git checkout main
+# git checkout -b develop
+# git push -u origin develop
+# git checkout -b feature/user-authentication
+# [Add authentication code]
+# git add .
+# git commit -m "feat: add user authentication system"
+# git push -u origin feature/user-authentication
+
+echo "# YOUR COMMANDS END HERE"
+
+### PRACTICE CHALLENGE 2 ###
+# TASK: Implement GitHub Rulesets and create pull request
+# 1. Configure Rulesets for develop branch in GitHub UI (Repository → Rules)
+# 2. Configure stricter Rulesets for main branch in GitHub UI
+# 3. Create a pull request from feature/user-authentication to develop
+# 4. Verify that Rulesets prevent direct merging (PR shows review required)
+
+echo ""
+echo "🎯 PRACTICE CHALLENGE 2: GitHub Rulesets & Pull Requests"
+echo "Complete the following tasks:"
+echo "1. Configure Ruleset for 'develop' branch via Repository → Rules"
+echo "2. Configure stricter Ruleset for 'main' branch"
+echo "3. Create pull request from feature branch to develop"
+echo "4. Verify Rulesets are enforced (PR shows merge restrictions)"
+echo ""
+echo "GitHub Actions Required (in Repository → Rules):"
+echo "# GITHUB UI ACTIONS:"
+echo "# 1. Go to: Repository → Rules (left sidebar)"
+echo "#    If no 'Rules' option, use: Settings → Code and automation → Rules"
+echo "# 2. Click 'New branch ruleset'"
+echo "# 3. Configure protect-develop ruleset (see guide above)"
+echo "# 4. Click 'New branch ruleset' again"
+echo "# 5. Configure protect-main ruleset (see guide above)"
+echo "# 6. Go to Pull requests tab"
+echo "# 7. Click 'New pull request'"
+echo "# 8. Create PR: feature/user-authentication → develop"
+echo "# 9. Verify PR page shows 'Review required' or merge is blocked"
+
+### PRACTICE CHALLENGE 3 ###
+# TASK: Implement release workflow
+# 1. Create a release branch named 'release/v1.0.0' from develop
+# 2. Add version information and release preparation commits
+# 3. Document the merge strategy for releasing to main
+# 4. Create Git tag v1.0.0
+
+echo ""
+echo "🎯 PRACTICE CHALLENGE 3: Release Workflow Implementation" 
+echo "Complete the following tasks:"
+echo "1. Create 'release/v1.0.0' branch from develop"
+echo "2. Add version file and release preparation"
+echo "3. Document complete release merge strategy"
+echo "4. Create and push Git tag v1.0.0"
+echo ""
+echo "Enter your Git commands below this line:"
+echo "# YOUR RELEASE COMMANDS START HERE"
+
+# Placeholder for student work - remove these comments and add actual commands
+# Example structure (students will replace with actual commands):
+# git checkout develop
+# git pull origin develop
+# git checkout -b release/v1.0.0
+# echo "1.0.0" > VERSION
+# git add VERSION
+# git commit -m "chore: prepare release v1.0.0"
+# git push -u origin release/v1.0.0
+# git tag v1.0.0
+# git push origin v1.0.0
+
+echo "# YOUR RELEASE COMMANDS END HERE"
+echo ""
+echo "# MERGE STRATEGY DOCUMENTATION:"
+echo "# Document your complete merge strategy here:"
+echo "# 1. How will you merge release/v1.0.0 to main?"
+echo "# 2. How will you sync changes back to develop?"
+echo "# 3. What Rulesets protect each merge?"
+
+# PROVIDED CODE - DO NOT MODIFY 
+# Verification and completion functions
+
+verify_branch_structure() {
+ echo "=== BRANCH STRUCTURE VERIFICATION ==="
+ echo "Expected branches: main, develop, feature/user-authentication, release/v1.0.0"
+ echo "Current branches:"
+ git branch -a
+ echo ""
+ 
+ echo "Branch relationships:"
+ git log --graph --oneline --all -10
+ echo ""
+}
+
+verify_github_setup() {
+ echo "=== GITHUB VERIFICATION CHECKLIST ==="
+ echo "✅ Verify these items in your GitHub repository:"
+ echo ""
+ echo "🌐 Repository Access:"
+ REPO_URL=$(git remote get-url origin | sed 's/\.git$//')
+ echo " Repository: $REPO_URL"
+ echo " Rulesets: $REPO_URL/rules/branches"
+ echo " Pull Requests: $REPO_URL/pulls"
+ echo ""
+ echo "🛡 GitHub Rulesets (verify in Repository → Rules):"
+ echo " [ ] protect-develop Ruleset enabled"
+ echo " [ ] protect-main Ruleset enabled"
+ echo " [ ] Both Rulesets show toggles as ON"
+ echo " [ ] Pull requests require reviews"
+ echo ""
+ echo "🔄 Workflow Status:"
+ echo " [ ] feature/user-authentication branch exists with commits"
+ echo " [ ] Pull request created from feature to develop"
+ echo " [ ] PR page shows 'Review required' or merge is blocked"
+ echo " [ ] release/v1.0.0 branch exists with version preparation"
+ echo " [ ] Git tag v1.0.0 created and pushed"
+}
+
+# PROVIDED CODE - DO NOT MODIFY
+# Final lab completion checklist
+
+echo "=== LAB COMPLETION CHECKLIST ==="
+echo ""
+echo "When you complete all practice challenges, run these verification commands:"
+echo " ./starter_code.sh verify_branches"
+echo " ./starter_code.sh verify_github"
+echo ""
+echo "🎯 Learning Outcomes Verification:"
+echo " [ ] PAT authentication configured and working"
+echo " [ ] GitFlow branch structure implemented correctly"
+echo " [ ] GitHub Rulesets configured and active (NOT legacy rules)"
+echo " [ ] Feature workflow demonstrated with pull request"
+echo " [ ] Release workflow prepared with proper merge strategy"
+echo " [ ] Git tags created for release management"
+echo ""
+echo "🚀 Next Steps After Completion:"
+echo "1. Verify Rulesets in GitHub: Repository → Rules (both enabled)"
+echo "2. Practice merging your pull request (with reviewer approval)"
+echo "3. Create release PR: release/v1.0.0 → main"
+echo "4. Merge release changes back to develop branch"
+echo "5. Verify Git tag is visible at Repository → Releases"
+
+# Handle command line arguments for verification functions
+case "${1:-}" in
+ "verify_branches")
+ verify_branch_structure
+ ;;
+ "verify_github")
+ verify_github_setup
+ ;;
+ *)
+ echo "Lab setup complete! Begin Practice Challenge 1."
+ echo "Run './starter_code.sh verify_branches' after completing challenges."
+ ;;
+esac
+
+
+
