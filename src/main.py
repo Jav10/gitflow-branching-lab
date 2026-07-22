@@ -1,6 +1,7 @@
 """
 Sample Application for GitFlow Demostration
 Simulates a simple we application with user management
+Agregado para hacer merge
 """
 
 class UserManager:
